@@ -13,11 +13,16 @@ pin19=Pin(19,Pin.OUT)
 leds=[pin16,pin15,pin2,pin4,pin17,pin5,pin18,pin19]
 
 def ledswitch():
-    for element in leds[2:8]:
+    for element in leds[::-1]:
         element.value(1)
         utime.sleep_ms(200)
         element.value(0)
         utime.sleep_ms(200)
+    for element in leds[::1]:
+        element.value(1)
+        utime.sleep_ms(50)
+        element.value(0)
+        utime.sleep_ms(50)
     
 while True:
     ledswitch()
