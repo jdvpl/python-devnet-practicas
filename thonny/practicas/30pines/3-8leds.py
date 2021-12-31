@@ -23,6 +23,11 @@ def ledswitch():
         utime.sleep_ms(50)
         element.value(0)
         utime.sleep_ms(50)
+    for element in leds[::-2]:
+        element.value(1)
+        utime.sleep_ms(100)
+        element.value(0)
+        utime.sleep_ms(100)
     
 while True:
     ledswitch()
