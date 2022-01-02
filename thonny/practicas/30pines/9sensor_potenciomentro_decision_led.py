@@ -1,7 +1,6 @@
 from machine import Pin, ADC
 import utime
 
-
 sensor=ADC(Pin(36))
 led_rojo=Pin(2,Pin.OUT)
 led_verde=Pin(4,Pin.OUT)
@@ -9,9 +8,6 @@ led_verde=Pin(4,Pin.OUT)
 sensor.atten(ADC.ATTN_11DB)
 #colocar una resolucion de 12 bits
 sensor.width(ADC.WIDTH_12BIT)
-
-# ejemplo para temperatura si fuera el sensor dht11 en vez del potenciometro
-#sensor tempratura 0 y 100 grados
 
 while True:
     #read_u16: mide voltaje tienes hasta 16 bits
