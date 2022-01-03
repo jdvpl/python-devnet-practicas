@@ -14,9 +14,12 @@ print(i2c.scan())
 # recibe el texto,posicion fila y columna
 
 oled.fill(0)
-oled.text('JDVPL....', 1, 0)
-oled.text('Juan Daniel', 1, 15)
-oled.text('Software developer', 0, 25)
-oled.show()
+oled.text('Juan Daniel', 0, 0) 
+oled.text('Areandina', 0, 10) 
+oled.text('Kakaroto', 0, 20) 
 
+
+
+oled.show()
+utime.sleep(4)
 
