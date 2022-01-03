@@ -1,4 +1,4 @@
-from machine import Pin, ADC, PWM
+from machine import Pin,  PWM
 import utime
 
 # freq=50 varia el ciclo de trabajo
