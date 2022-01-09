@@ -10,6 +10,7 @@ i2c=I2C(0,scl=Pin(22),sda=Pin(21))
 oled = sh1106.SH1106_I2C(ancho, alto, i2c)
 
 # calibrar potenciometro
+# es el vp
 sensor=ADC(Pin(36))
 #debe quedar atenua a 3v a 11db permite un rango de lectura entre 0v a 3.6v
 sensor.atten(ADC.ATTN_11DB)
