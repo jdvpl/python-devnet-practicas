@@ -19,7 +19,7 @@ while True:
     print(distance,' cm')
     time.sleep_ms(100)
     oled.fill(0)
-    oled.text("Dostancia:",30,20) 
+    oled.text("Distancia:",30,20) 
     oled.text(str(distance),30,40)
     oled.text("cm",30,50)
     oled.show()
