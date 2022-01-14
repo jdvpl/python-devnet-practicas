@@ -1,0 +1,22 @@
+{
+    "channel": {
+      "id": 1631586,
+      "name": "control de temperatura",
+      "description": "Proyecto utiliza dht11",
+      "latitude": "0.0",
+      "longitude": "0.0",
+      "field1": "Temperatura °C",
+      "field2": "Humedad %",
+      "created_at": "2022-01-12T23:38:00Z",
+      "updated_at": "2022-01-12T23:38:00Z",
+      "last_entry_id": 1
+    },
+    "feeds": [
+      {
+        "created_at": "2022-01-12T23:41:34Z",
+        "entry_id": 1,
+        "field1": "0",
+        "field2": null
+      }
+    ]
+  }

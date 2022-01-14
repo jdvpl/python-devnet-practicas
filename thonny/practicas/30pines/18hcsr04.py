@@ -16,12 +16,11 @@ sensor = HCSR04(trigger_pin=5, echo_pin=18,echo_timeout_us=1000000)
 
 while True:
     distance = sensor.distance_cm()
-    print(distance,' cm')
-    time.sleep_ms(100)
+    distancia="Distancia:{:.2f}cm ".format(distance)
+    print(distancia)
+    time.sleep(1)
     oled.fill(0)
-    oled.text("Distancia:",30,20) 
-    oled.text(str(distance),30,40)
-    oled.text("cm",30,50)
+    oled.text(f"{distancia}:",0,0) 
     oled.show()
     
 
