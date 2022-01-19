@@ -34,6 +34,7 @@ class SensorBase:
 		temp *= .02;
 		# Kelvin to Celcius
 		temp -= 273.15;
+		temp+=10
 		return temp;
 
 	def read_ambient_temp(self):
