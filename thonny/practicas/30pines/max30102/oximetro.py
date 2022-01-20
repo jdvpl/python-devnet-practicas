@@ -1,4 +1,3 @@
-
 from MAX30102 import MAX30102
 from machine import sleep
 from utime import ticks_diff, ticks_ms
@@ -70,3 +69,5 @@ if __name__ == '__main__':
                     samples_n = 0
                     t_start = ticks_ms()
                     print("acquisition frequency = ",f_HZ)
+    
+        sleep(2)
