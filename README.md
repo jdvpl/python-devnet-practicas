@@ -17,3 +17,9 @@ https://github.com/lemariva/wipy2.0
 https://github.com/WangTiantian139/fingerprint_recognition_using_ATK-AS608
 
 ---
+
+### serial communication
+```
+https://www.youtube.com/watch?v=_A2KwuiE7Ww
+https://www.youtube.com/watch?v=YVPumD16Y_Y
+```
