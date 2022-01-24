@@ -72,7 +72,7 @@ if conectaWifi ("Jdvpl", "R@p1df@5t"):
                     'Content-Type': 'application/json'
                     }
                     print(payload)
-                    response = urequests.post(url,data)
+                    response = urequests.post(url,data=data)
                     if response.status_code != 200:
                         raise Exception(response.text)
                     bandera=False
