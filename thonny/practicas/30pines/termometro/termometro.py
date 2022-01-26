@@ -1,9 +1,9 @@
-import mlx90614
+from lib.mlx90614 import MLX90614
 from machine import I2C, Pin
 import time
 
 i2c =I2C(-1,scl=Pin(22), sda=Pin(21),freq = 100000)
-sensor = mlx90614.MLX90614(i2c)
+sensor = MLX90614(i2c)
 
 print("Ambient (C)", sensor.read_ambient_temp())
 print("Object  (C)", sensor.read_object_temp())

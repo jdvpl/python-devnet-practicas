@@ -1,21 +1,20 @@
-from machine import UART, Pin, I2C
-from micropyGPS import MicropyGPS
-import utime
-import sh1106
-import network
-import nmea
-import network, time, urequests
+from hcsr04 import HCSR04
+from machine import Pin,SoftI2C
+from lib.sh1106 import SH1106_I2C
+import network, time
+import framebuf
+import urequests as requests
 import json
 
-# el tx debe ir al rx2 y el rx al tx2
+ancho=128
+alto=64
 
-WiFi_SSID = "Jdvpl"
-WiFi_PASS = "R@p1df@5t"
 
-i2c = I2C(0, scl=Pin(22), sda=Pin(21))
-oled_width = 128
-oled_height = 64
-oled = sh1106.SH1106_I2C(oled_width, oled_height, i2c)
+# pines
+# pin d5  es el de echo hcsr04
+# pin d18 es el de triger hcsr04
+i2c=SoftI2C(scl=Pin(5),sda=Pin(4),freq=100000)
+oled =SH1106_I2C(ancho, alto, i2c)
 
 
 def conectaWifi (red, password):
@@ -31,62 +30,54 @@ def conectaWifi (red, password):
                 return False
     return True
 
+
+def buscar_icono(ruta):
+    dibujo= open(ruta, "rb")  # Abrir en modo lectura de bist
+    dibujo.readline() # metodo para ubicarse en la primera linea de los bist
+    xy = dibujo.readline() # ubicarnos en la segunda linea
+    x = int(xy.split()[0])  # split  devuelve una lista de los elementos de la variable solo 2 elemetos
+    y = int(xy.split()[1])
+    icono = bytearray(dibujo.read())  # guardar en matriz de bites
+    dibujo.close()
+    return framebuf.FrameBuffer(icono, x, y, framebuf.MONO_HLSB)
+
+
 if conectaWifi ("Jdvpl", "R@p1df@5t"):
     print ("Conexión exitosa!")
-    print('Datos de mi red (IP/netmask/gw/DNS):', miRed.ifconfig())
-    url = "https://us-central1-pultemsoft.cloudfunctions.net/app/api/users"
-    print(url)
+    print('Datos de la red (IP/netmask/gw/DNS):', miRed.ifconfig())
+    url = "http://us-central1-pultemsoft.cloudfunctions.net/app/api/users"
+    data = {
+    "name":"Daniel",
+    "lat":9.6676,
+    "lon":-74.5618,
+    "eps":"26132132lol"
+    }
+    headers = {"Content-Type": "application/json"}
+    r = requests.post(url,data=json.dumps(data),headers=headers)
+    print(r.json())
 
-
-    oled.text('JDVPL', 0, 0)  # Afficher les deux mots ''
-    oled.text('ESP32', 0, 10)
-    oled.show()
-    uart = UART(2, 9600)
-    now = utime.ticks_ms()
-    my_nmea = nmea.nmea(debug=1)
-
+    while True:
+        distancia = 5
+        # distancia="{:.2f}cm ".format(distance)
+        print(distancia)
+        time.sleep(1)
+        oled.fill(0)
+        oled.blit(buscar_icono("img/pultemsoft.pbm"), 10, 0)  
+        oled.text(f"{distancia}",45,20)
+        oled.show()
+        #respuesta = urequests.get(url+"&field1="+str(distancia))
+        #print(respuesta.text)
+        #print (respuesta.status_code)
+        #respuesta.close ()
     
-    bandera=True
-
-    while 1:
-        while uart.any():
-            b = uart.read()
-            my_nmea.parse(b)
-
-        if utime.ticks_diff(utime.ticks_ms(), now) > 5000:
-                now = utime.ticks_ms()
-                print('{} {}'.format(my_nmea.latitude, my_nmea.longitude))
-                lat = my_nmea.latitude
-                lng = my_nmea.longitude
-
-                if lat !=0 and lng !=0 and bandera:
-                    payload = {
-                    "name": "Juan Daniel",
-                    "lat": lat,
-                    "lon": lng,
-                    "eps": "Sanitas",
-                    "cc":"1077870326"
-                    }
-                    data=(json.dumps(payload)).encode()
-                    headers = {
-                    'Content-Type': 'application/json'
-                    }
-                    print(payload)
-                    response = urequests.post(url,data=data)
-                    if response.status_code != 200:
-                        raise Exception(response.text)
-                    bandera=False
-                
-                oled.fill(0)
-                y = 0
-                dy = 10
-                oled.text("Lat:{}".format(my_nmea.latitude),  0, y)
-                y += dy
-                oled.text("Lng:{}".format(my_nmea.longitude),  0, y)
-                oled.show()
 else:
        print ("Imposible conectar")
        miRed.active (False)
 
 
-# libreria para trabajar con la spi
+
+
+
+
+
+
